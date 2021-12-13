@@ -17,7 +17,7 @@ jobs:
       #
       # Your build steps go here...
       #
-      - uses: reliablyhq/operations-action@v1
+      - uses: reliablyhq/operations-action@v2
         if: ${{ success() }}
         env:
           RELIABLY_TOKEN: ${{ secrets.RELIABLY_TOKEN }}
@@ -27,7 +27,7 @@ jobs:
           service: my awesome service
           type: build
           outcome: success
-      - uses: reliablyhq/operations-action@v1
+      - uses: reliablyhq/operations-action@v2
         if: ${{ failure() }}
         env:
           RELIABLY_TOKEN: ${{ secrets.RELIABLY_TOKEN }}
@@ -60,4 +60,6 @@ A good example of how to set the environment variables is in the example above.
 
 You can retrieve your access token once authenticated with the CLI
 
-```reliably auth status --show-token
+```
+reliably auth status --show-token
+```
