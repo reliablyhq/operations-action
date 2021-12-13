@@ -1,0 +1,32 @@
+name: My Pipeline
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      #
+      # Your build steps go here...
+      #
+      - uses: reliablyhq/operations-action@v1
+        if: ${{ success() }}
+        env:
+          RELIABLY_TOKEN: ${{ secrets.RELIABLY_TOKEN }}
+          RELIABLY_ORG: ${{ secrets.RELIABLY_ORG }}
+        continue-on-error: true
+        with:
+          service: my awesome service
+          type: build
+          outcome: success
+      - uses: reliablyhq/operations-action@v1
+        if: ${{ failure() }}
+        env:
+          RELIABLY_TOKEN: ${{ secrets.RELIABLY_TOKEN }}
+          RELIABLY_ORG: ${{ secrets.RELIABLY_ORG }}
+        continue-on-error: true
+        with:
+          service: my awesome service
+          type: build
+          outcome: failure
